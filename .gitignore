@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+*.sqlite3
+
+# Virtualenv
+venv/
+env/
+.env
+ENV/
+.Python
+
+# Django
+*.log
+staticfiles/
+media/
+db.sqlite3
+*.pyc
+local_settings.py
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+
+# Coverage/reports
+htmlcov/
+.coverage
