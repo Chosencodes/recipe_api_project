@@ -14,22 +14,39 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+# recipe_api/urls.py
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from recipes.views import RecipeViewSet
-from users.views import MyTokenObtainPairView, RegisterView, ProfileView
-from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework import routers
+from recipes.views import RecipeViewSet, CategoryViewSet
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
-router = DefaultRouter()
-router.register(r"recipes", RecipeViewSet, basename="recipe")
+router = routers.DefaultRouter()
+router.register(r'recipes', RecipeViewSet, basename='recipe')
+router.register(r'categories', CategoryViewSet, basename='category')
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Recipe API",
+        default_version='v1',
+        description="API documentation for Recipe API",
+        contact=openapi.Contact(email="mysenbooks@gmail.com"),
+    ),
+    public=True,
+    permission_classes=[AllowAny],
+)
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/users/register/", RegisterView.as_view(), name="register"),
-    path("api/users/login/", MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/users/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("api/users/profile/", ProfileView.as_view(), name="profile"),
-    path("api/", include(router.urls)),
+    path('api/', include('recipes.urls')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    
 
 ]

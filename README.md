@@ -44,3 +44,21 @@ A Django REST Framework API for managing recipes. Users can register, authentica
 ```bash
 git clone https://github.com/<your-username>/recipe_api_project.git
 cd recipe_api_project
+
+## API Documentation
+
+### Authentication
+All recipe endpoints require JWT tokens. Include in headers:
+
+
+### Recipe Endpoints
+
+- **GET /api/recipes/** → list your recipes  
+- **POST /api/recipes/** → create recipe  
+- **GET /api/recipes/<id>/** → retrieve single recipe  
+- **PUT /api/recipes/<id>/** → update recipe  
+- **DELETE /api/recipes/<id>/** → delete recipe  
+
+**Filtering:**
+- `?category=Dessert` → filter by category  
+- `?search=chicken` → search ingredients
